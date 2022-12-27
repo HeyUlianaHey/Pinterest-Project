@@ -44,11 +44,6 @@ class UserModelTest(TestCase):
         response = self.client.get(reverse("accounts:user_register"))
         self.assertEqual(response.status_code, 200)
 
-    # def test_url_exists_at_correct_location_user_logout(self):
-    #     self.client.login(username='John', password="John2022")
-    #     response = self.client.get(reverse("accounts:user_logout"))
-    #     self.assertEqual(response.status_code, 200)
-
 
 class UserFixturesModelTest(TestCase):
     fixtures = ['dump.json']
@@ -115,3 +110,34 @@ class ProfileModelTest(TestCase):
         user = Profile.objects.get(pk=1)
         expected_object_name = f'{user.user.username} Profile'
         self.assertEquals(expected_object_name, str(user))
+
+
+class WaysTestCase(TestCase):
+
+    def setUp(self):
+        User.objects.create_user(username="John", password="John2022", email='John@22.com')
+
+    def test_url_exists_at_correct_location_edit_profile(self):
+        self.client.login(username='John', password="John2022")
+        response = self.client.get(reverse('accounts:edit_profile'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_exists_at_correct_location_describe(self):
+        response = self.client.get(reverse('accounts:describe'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_exists_at_correct_location_hello(self):
+        response = self.client.get(reverse('accounts:hello'))
+        self.assertEqual(response.status_code, 200)
+
+
+
+
+
+
+
+
+
+
+
+

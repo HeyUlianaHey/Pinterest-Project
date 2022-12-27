@@ -13,7 +13,7 @@ def home(request):
 
 @login_required
 def search(request):
-    query = request.GET.get('q')
+    query = request.GET.get('q', default='')
     pins = Pin.objects.filter(
         title__icontains=query,
         description__icontains=query).all()
