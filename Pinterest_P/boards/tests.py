@@ -24,12 +24,12 @@ class BoardFixturesModelTest(TestCase):
         self.assertEquals(expected_object_name, str(user))
 
     def test_is_private_default(self):
-        user = Board.objects.get(id=1)
+        user = Board.objects.get(pk=1)
         field = user._meta.get_field('is_private').default
         self.assertEquals(field, False)
 
     def test_cover_default(self):
-        user = Board.objects.get(id=1)
+        user = Board.objects.get(pk=1)
         field = user._meta.get_field('cover').default
         self.assertEquals(field, 'boards/default.png')
 

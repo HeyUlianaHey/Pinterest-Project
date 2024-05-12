@@ -7,16 +7,21 @@ from boards.models import Board
 
 class Pin(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='pin_user'
+        User, on_delete=models.CASCADE, related_name='pin_user', verbose_name="Пользователь"
     )
     board = models.ForeignKey(
-        Board, on_delete=models.CASCADE, related_name='boards'
+        Board, on_delete=models.CASCADE, related_name='boards', verbose_name="Доска"
     )
-    file = models.FileField(upload_to='pins')
-    title = models.CharField(max_length=250)
-    link = models.CharField(max_length=250)
-    description = models.TextField()
-    date_created = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(upload_to='pins', verbose_name="Файл")
+    title = models.CharField(max_length=250, verbose_name="Заголовок")
+    link = models.CharField(max_length=250, verbose_name="Ссылка")
+    description = models.TextField(verbose_name="Описание")
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
+
+    class Meta:
+        db_table = "пин"
+        verbose_name = "Пин"
+        verbose_name_plural = "Пины"
 
     def __str__(self):
         return self.title
@@ -31,10 +36,15 @@ class Pin(models.Model):
 
 
 class Comment(models.Model):
-    pin = models.ForeignKey(Pin, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='all_comments')
-    text = models.CharField(max_length=250)
-    date_created = models.DateTimeField(auto_now_add=True)
+    pin = models.ForeignKey(Pin, on_delete=models.CASCADE, related_name='comments', verbose_name="Пин")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='all_comments', verbose_name="Пользователь")
+    text = models.CharField(max_length=250, verbose_name="Содержание")
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
+
+    class Meta:
+        db_table = "комментарий"
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
 
     def __str__(self):
-        return f'{self.user} says {self.text}'
+        return f'{self.user} комментирует {self.text}'

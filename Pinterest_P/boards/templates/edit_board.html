@@ -26,10 +26,13 @@
                 <label for="">Описание:</label>
                 <p>{{ form.description }}</p>
             </div>
-            <button type="submit" class="red-btn btn ps-3 pe-3 text-white"><b>Готово</b></button>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="red-btn btn ps-3 pe-3 text-white"><b>Готово</b></button>
+                <a href="{% url 'boards:delete_board' board.id %}" class="red-btn btn ps-3 pe-3 text-white"><b>Удалить</b></a>
+            </div>
             </form>
     </div>
 
     <div class="col-md-3"></div>
 </div>
-    {% endblock %}
+{% endblock %}

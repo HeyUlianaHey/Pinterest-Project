@@ -39,8 +39,16 @@ def edit_board(request, id):
             form.save()
             return redirect('accounts:profile', request.user.username)
     form = EditBoardForm(instance=board)
-    context = {'board': board ,'form': form}
+    context = {'board': board, 'form': form}
     return render(request, 'edit_board.html', context)
+
+
+@login_required
+def delete_board(request, id):
+    board = get_object_or_404(Board, id=id)
+    if request.user == board.user:
+        board.delete()
+    return redirect('accounts:profile', request.user.username)
 
 
 @login_required
@@ -60,8 +68,15 @@ def save_to_board(request, id):
 
 @login_required
 def remove_from_board(request, pin_id, board_id):
-    board = request.user.board_user.filter(id=board_id).first()
-    get_pin = board.pins.filter(id=pin_id).first()
-    if get_pin:
-        board.pins.remove(get_pin)
+    try:
+        board = request.user.board_user.filter(id=board_id).first()
+        get_pin = board.pins.filter(id=pin_id).first()
+        pin = get_object_or_404(Pin, id=pin_id)
+        if get_pin:
+            board.pins.remove(get_pin)
+        if request.user == pin.user:
+            pin.delete()
+    except Exception:
+        print("you are not allowed to delete such pin!")
     return redirect(request.META.get('HTTP_REFERER'))
+

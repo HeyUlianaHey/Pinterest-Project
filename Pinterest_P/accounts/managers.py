@@ -4,12 +4,12 @@ from django.contrib.auth.models import BaseUserManager
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password):
         if not email:
-            raise ValueError('Требуется email!')
+            raise ValueError('Введите почту!')
         if not username:
-            raise ValueError('Требуется full username!')
+            raise ValueError('Введите имя пользователя!')
 
         user = self.model(email=self.normalize_email(email), username=username)
-        user.set_password(password)
+        user.set_password(password) # hash raw password and set
         user.save(using=self.db)
         return user
 

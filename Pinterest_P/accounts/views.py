@@ -24,7 +24,7 @@ def user_register(request):
                 return redirect('accounts:user_login')
     else:
         form = UserRegistrationForm()
-    context = {'title':'Signup', 'form':form}
+    context = {'title': 'Signup', 'form': form}
     return render(request, 'register.html', context)
 
 
@@ -43,7 +43,7 @@ def user_login(request):
                 return redirect(request.META.get('HTTP_REFERER'))
     else:
         form = UserLoginForm()
-    context = {'title':'Login', 'form': form}
+    context = {'title': 'Login', 'form': form}
     return render(request, 'login.html', context)
 
 
@@ -105,6 +105,7 @@ def edit_profile(request):
 
 def describe(request):
     return render(request, 'describe.html')
+
 
 def hello(request):
     return render(request, 'Hello.html')
